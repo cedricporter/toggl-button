@@ -34,7 +34,7 @@ function createLink(className, tagName, linkHref) {
   return link;
 }
 
-function createOption(id, cid, clientName, projectName) {
+function createOption(id, cid, clientName, projectName, isSelected) {
   var option = document.createElement("option");
   option.setAttribute("value", id);
   option.setAttribute("data-client-id", cid);
@@ -52,19 +52,22 @@ function createOption(id, cid, clientName, projectName) {
     option.setAttribute("data-client-name", clientName);
   }
 
+  if (isSelected) option.setAttribute("selected", isSelected);
+    
   return option;
 }
 
-function createProjectSelect(userData, className) {
-  var clients, projectLabel, option, select = createTag('select', className);
+function createProjectSelect(userData, className, projectName) {
+  var clients, clientLabel, option, select = createTag('select', className);
 
   //add an empty (default) option
   select.appendChild(createOption("default", null, "Select a toggl project"));
 
   userData.projects.forEach(function (project) {
     clients = userData.clients.filter(function (elem, index, array) { return (elem.id === project.cid); });
-    projectLabel = (clients.length > 0 ? clients[0].name + " - " : "") + project.name;
-    select.appendChild(createOption(project.id, project.cid, projectLabel));
+      
+    clientLabel = (clients.length > 0 ? clients[0].name + " - " : "");
+    select.appendChild(createOption(project.id, project.cid, clientLabel, project.name, project.name == projectName));
   });
 
   return select;

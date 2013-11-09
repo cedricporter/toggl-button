@@ -25,7 +25,8 @@
     if (e.target.className === "details-pane-redesign" || iframeRegex.test(e.target.name)) {
       var taskDescription = $(".property.description"),
         title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
-        projectSelect = createProjectSelect(userData, "toggl-select asana");
+        asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name"),
+        projectSelect = createProjectSelect(userData, "toggl-select asana", asanaProject ? asanaProject.text : '');
 
       //make sure we init the values when switching between tasks
       selectedProjectId = null;
@@ -57,3 +58,4 @@
   });
 
 }());
+
