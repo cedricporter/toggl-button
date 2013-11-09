@@ -26,8 +26,12 @@
       var taskDescription = $(".property.description"),
         title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
         asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name"),
+        ancestor_task = $(".ancestor-link"),
         projectSelect = createProjectSelect(userData, "toggl-select asana", asanaProject ? asanaProject.text : '');
 
+      // prefix subtask with ancestor
+      if (ancestor_task) title = ancestor_task.text + " - " + title;
+        
       //make sure we init the values when switching between tasks
       selectedProjectId = null;
       selectedProjectBillable = false;
