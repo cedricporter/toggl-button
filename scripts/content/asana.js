@@ -33,7 +33,7 @@
       if (ancestor_task) title = ancestor_task.text + " - " + title;
         
       //make sure we init the values when switching between tasks
-      selectedProjectId = null;
+      selectedProjectId = projectSelect.value;
       selectedProjectBillable = false;
 
       projectSelect.onchange = function (event) {
@@ -62,4 +62,5 @@
   });
 
 }());
+
 
