@@ -6,12 +6,13 @@
   var iframeRegex = /oauth2relay/, userData = null,
     selectedProjectId = null, selectedProjectBillable = false;
 
-  function createTimerLink(task) {
+  function createTimerLink(task, tags) {
     var link = createLink('toggl-button asana');
     link.addEventListener("click", function (e) {
       chrome.extension.sendMessage({
         type: 'timeEntry',
         description: task,
+        tags: tags,
         projectId: selectedProjectId,
         billable: selectedProjectBillable
       });
@@ -27,6 +28,7 @@
         title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
         asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name"),
         ancestor_task = $(".ancestor-link"),
+        task_id = JSON.parse($(".harvest-timer").getAttribute("data-item"))["id"],
         projectSelect = createProjectSelect(userData, "toggl-select asana", asanaProject ? asanaProject.text : '');
 
       // prefix subtask with ancestor
@@ -48,7 +50,7 @@
         }
       };
 
-      taskDescription.parentNode.insertBefore(createTimerLink(title), taskDescription.nextSibling);
+      taskDescription.parentNode.insertBefore(createTimerLink(title, ["ztask-" + task_id]), taskDescription.nextSibling);
       taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
     }
   }
@@ -62,5 +64,6 @@
   });
 
 }());
+
 
 

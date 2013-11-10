@@ -37,6 +37,7 @@ var TogglButton = {
           wid: TogglButton.$user.default_wid,
           pid: timeEntry.projectId || null,
           billable: timeEntry.billable || false,
+          tags: timeEntry.tags || null,
           duration: -(start.getTime() / 1000)
         }
       };
@@ -61,3 +62,4 @@ var TogglButton = {
 TogglButton.fetchUser();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
+
