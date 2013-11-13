@@ -24,34 +24,37 @@
 
   function addButton(e) {
     if (e.target.className === "details-pane-redesign" || iframeRegex.test(e.target.name)) {
-      var taskDescription = $(".property.description"),
-        title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
-        asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name"),
-        ancestor_task = $(".ancestor-link"),
-        task_id = JSON.parse($(".harvest-timer").getAttribute("data-item"))["id"],
-        projectSelect = createProjectSelect(userData, "toggl-select asana", asanaProject ? asanaProject.text : '');
+      setTimeout(function () {
+        console.log(window.location.pathname.split("/"));
+        var taskDescription = $(".property.description"),
+            title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
+            asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name"),
+            ancestor_task = $(".ancestor-link"),
+            task_id = window.location.pathname.split("/").slice(-1)[0],
+            projectSelect = createProjectSelect(userData, "toggl-select asana", asanaProject ? asanaProject.text : '');
 
-      // prefix subtask with ancestor
-      if (ancestor_task) title = ancestor_task.text + " - " + title;
-        
-      //make sure we init the values when switching between tasks
-      selectedProjectId = projectSelect.value;
-      selectedProjectBillable = false;
+        // prefix subtask with ancestor
+        if (ancestor_task) title = ancestor_task.text + " - " + title;
 
-      projectSelect.onchange = function (event) {
-        selectedProjectId = event.target.options[event.target.selectedIndex].value;
-        if (selectedProjectId !== "default") {
-          selectedProjectBillable = userData.projects.filter(function (elem, index, array) {
-            return (elem.id === selectedProjectId);
-          })[0].billable;
-        } else {
-          selectedProjectId = null;
-          selectedProjectBillable = false;
-        }
-      };
+        //make sure we init the values when switching between tasks
+        selectedProjectId = projectSelect.value;
+        selectedProjectBillable = false;
 
-      taskDescription.parentNode.insertBefore(createTimerLink(title, ["ztask-" + task_id]), taskDescription.nextSibling);
-      taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
+        projectSelect.onchange = function (event) {
+          selectedProjectId = event.target.options[event.target.selectedIndex].value;
+          if (selectedProjectId !== "default") {
+            selectedProjectBillable = userData.projects.filter(function (elem, index, array) {
+                                        return (elem.id === selectedProjectId);
+                                      })[0].billable;
+          } else {
+            selectedProjectId = null;
+            selectedProjectBillable = false;
+          }
+        };
+
+        taskDescription.parentNode.insertBefore(createTimerLink(title, ["ztask-" + task_id]), taskDescription.nextSibling);
+        taskDescription.parentNode.insertBefore(projectSelect, taskDescription.nextSibling);
+      } , 1000);
     }
   }
 
@@ -64,6 +67,3 @@
   });
 
 }());
-
-
-
