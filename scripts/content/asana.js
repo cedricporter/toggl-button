@@ -25,7 +25,6 @@
   function addButton(e) {
     if (e.target.className === "details-pane-redesign" || iframeRegex.test(e.target.name)) {
       setTimeout(function () {
-        console.log(window.location.pathname.split("/"));
         var taskDescription = $(".property.description"),
             title = $("#details_pane_title_row textarea#details_property_sheet_title").value,
             asanaProject = $(".ancestor-projects > .tag, .property.projects .token_name"),
