@@ -16,7 +16,7 @@ var TogglButton = {
 
   fetchUser: function () {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json?with_related_data=true", true);
+    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json", true);
     xhr.onload = function () {
       if (xhr.status === 200) {
         var resp = JSON.parse(xhr.responseText);
@@ -62,4 +62,3 @@ var TogglButton = {
 TogglButton.fetchUser();
 chrome.tabs.onUpdated.addListener(TogglButton.checkUrl);
 chrome.extension.onMessage.addListener(TogglButton.newMessage);
-
