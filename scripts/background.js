@@ -16,7 +16,7 @@ var TogglButton = {
 
   fetchUser: function () {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json", true);
+    xhr.open("GET", TogglButton.$apiUrl + "/v7/me.json?with_related_data=true", true);
     xhr.onload = function () {
       if (xhr.status === 200) {
         var resp = JSON.parse(xhr.responseText);
